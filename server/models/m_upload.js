@@ -6,7 +6,9 @@ let uploadSchema = mongoose.Schema({
     UploadDesc: String,
     UploadType: String,
     UploadStatus: String,
-    UploadImage: String
+    UploadImage: String,
+    UploadDislike: Number,
+    UploadLike: Number
 });
 
 let Upload = mongoose.model('Upload', uploadSchema);

@@ -6,11 +6,7 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require('mongoose');
-<<<<<<< HEAD
 var cors = require('cors')
-=======
-var cors = require('cors');
->>>>>>> udah like/dislike tapi belum parent component, tampilan masih jelek
 
 mongoose.connect('mongodb://localhost/hoax');
 

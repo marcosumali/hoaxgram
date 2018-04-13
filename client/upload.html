@@ -76,7 +76,7 @@
                 addUploadToDB() {
 
                     const fileInput = document.querySelector('#image');
-                    // console.log('ini fileinput',fileInput);
+                    console.log('ini fileinput',fileInput);
 
                     var formData = new FormData()
                     formData.append('UploadTitle', this.$refs.title.value);
@@ -84,6 +84,9 @@
                     formData.append('UploadType', 'Open');
                     formData.append('UploadStatus', this.$refs.status.value);
                     formData.append('image', fileInput.files[0]);
+
+                    console.log(formData);
+                    
 
                     // let obj = {
                     //     UploadTitle: this.$refs.title.value,

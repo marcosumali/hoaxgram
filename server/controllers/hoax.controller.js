@@ -1,4 +1,4 @@
-const Hoax = require('../models/hoax.model');
+const Hoax = require('../models/m_upload');
 
 module.exports = {
     getAllHoax: function(req, res){
