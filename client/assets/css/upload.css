@@ -3,5 +3,31 @@
 }
 
 .bg-image {
-    background-color: darkturquoise;
+    /* background-color: darkturquoise; */
+    /* background-image: url("../image/back-image.jpg"); */
+    /* background-size: cover; */
+}
+
+
+.container-item-upload {
+    background-color: gainsboro;
+    border-radius: 5px;
+    display: flex;
+    margin-bottom: 10px;
+    /* margin: 10px; */
+    flex-wrap: wrap;
+    /* border: 1px solid black; */
+}
+
+.image, .upload {
+    margin: 5px;
+    /* width: 100px; */
+    /* height: 100px; */
+}
+
+
+.container-item-form {
+    background-color: gainsboro;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
