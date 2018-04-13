@@ -1,4 +1,4 @@
-var dotenv = require('dotenv');
+require('dotenv').config()
 var createError = require('http-errors');
 cors = require('cors')
 var express = require('express');
@@ -49,5 +49,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
