@@ -10,8 +10,36 @@ var app = new Vue({
     emailerror: '',
     errpassword: '',
     errpanel: '',
-    regissuccess: ''
+    regissuccess: '',
+    hoaxs: []
   },
+
+  beforeCreate: function(){
+
+    //ambil semua data hoax
+    axios.get('http://localhost:3000/hoax/allhoax')
+    .then(response =>{           
+        this.hoaxs = response.data.data;       
+        
+        let votedHoaxs = JSON.parse(localStorage.getItem('voteds'));
+        let isVoted;
+        
+        (votedHoaxs) ? '' : votedHoaxs=[];
+
+        for(index in this.hoaxs){
+            
+            if(this.hoaxs[index].UploadType === 'Close'){
+                votedHoaxs.push(this.hoaxs[index]._id);                        
+            }
+        }
+        
+        localStorage.setItem('voteds', JSON.stringify(votedHoaxs))
+    })
+    .catch(error =>{
+        console.log('ini error----------------------------',error);
+    })
+},
+
   methods:{
     isEmailValid: function (email) {
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{3}))$/;
@@ -71,6 +99,78 @@ var app = new Vue({
           }
         })
       }
+    },
+
+    increaseLike: function(hoax){      
+      let votedHoaxs = JSON.parse(localStorage.getItem('voteds'));
+      let isVoted;
+      let _this = this;
+
+      if(votedHoaxs.length > 0){
+          isVoted = votedHoaxs.find((checked)=>{
+              return checked === hoax._id;
+          })
+
+          if(!isVoted){
+              hoax.UploadLike++;
+              votedHoaxs.push(hoax._id);
+              localStorage.setItem('voteds', JSON.stringify(votedHoaxs))
+
+              this.updateLikeDislike(hoax);
+          }
+                         
+        } else {                
+            hoax.UploadLike++;
+            votedHoaxs = [];
+            votedHoaxs.push(hoax._id);
+            localStorage.setItem('voteds', JSON.stringify(votedHoaxs))
+
+            this.updateLikeDislike(hoax);
+        }
+        
+    },
+
+  increaseDislike: function(hoax){
+      let votedHoaxs = JSON.parse(localStorage.getItem('voteds'));
+      let isVoted;
+      let _this = this;
+
+      if(votedHoaxs.length > 0){
+          isVoted = votedHoaxs.find((checked)=>{
+              return checked === hoax._id;
+          })
+
+          if(!isVoted){
+              hoax.UploadDislike++;
+              votedHoaxs.push(hoax._id);
+              localStorage.setItem('voteds', JSON.stringify(votedHoaxs))
+
+              this.updateLikeDislike(hoax);
+          }
+                         
+        } else {                
+            hoax.UploadDislike++;
+            votedHoaxs = [];
+            votedHoaxs.push(hoax._id);
+            localStorage.setItem('voteds', JSON.stringify(votedHoaxs))
+
+            this.updateLikeDislike(hoax)
+        }
+      
+    },
+
+    updateLikeDislike: function(hoax){
+        axios.post('http://localhost:3000/hoax/like-dislike',{
+            _id: hoax._id,
+            UploadLike: hoax.UploadLike,
+            UploadDislike: hoax.UploadDislike
+        })
+        .then(response=>{
+            console.log(response)                
+        })
+        .catch(error=>{
+            console.log(error)                
+        })
     }
   },
   watch: {
