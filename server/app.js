@@ -10,6 +10,7 @@ var cors = require('cors')
 
 mongoose.connect('mongodb://localhost/hoax');
 
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var detailsRouter = require('./routes/detail-post');
