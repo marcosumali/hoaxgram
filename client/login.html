@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login hoaxgram</title>
+    <link href="http://netdna.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="assets/css/style.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <style media="screen">
+      @font-face {
+        font-family: hoaxfont;
+        src: url(Shrikhand-Regular.ttf);
+      }
+      body{
+        background-image: url('assets/img/backgroundlogin.jpg');
+        background-size: cover;
+        padding-top: 50px;
+      }
+      .register{
+        float:right;
+        cursor:pointer;
+        margin-top: 10px;
+        color:rgb(100,100,100);
+      }
+      .register:hover{
+        color: rgba(0,0,150,0.8);
+      }
+      .btn{
+        transition: 1.5s;
+      }
+      .card{
+        transition: 1.5s;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container" id="app">
+      <div class="row justify-content-center">
+        <div class="col-md-5" style="padding:20px;">
+          <div class="card-container manual-flip">
+             <div class="card">
+                 <div class="front">
+                   <div class="header">
+                       <h5 class="motto">"Login"</h5>
+                   </div>
+                     <div class="content">
+                         <div class="main">
+                           <form>
+                             <div class="form-group">
+                               <label for="exampleInputEmail1">Email address</label>
+                               <input type="email" class="form-control" v-model="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" data-toggle="tooltip" data-placement="top" title="Enter your email">
+                             </div>
+                             <div class="form-group">
+                               <label for="exampleInputPassword1">Password</label>
+                               <input type="password" class="form-control" v-model="password" id="exampleInputPassword1" placeholder="Password" data-toggle="tooltip" data-placement="bottom" title="Enter Your Password">
+                             </div>
+                             <button type="button" class="btn btn-outline-dark" style="width:100%;" @click="login">Login</button>
+                           </form>
+                         </div>
+                         <div class="footer">
+                           <small id="emailHelp" class="register" onclick="rotateCard(this)">Register <i class="fa fa-mail-forward"></i></small>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="back">
+                     <div class="header" v-if="errpanel === '' && regissuccess === ''">
+                         <h5 class="motto">"Register"</h5>
+                     </div>
+                     <div class="content">
+                         <div class="main">
+                           <div class="alert alert-danger" role="alert" v-show="errpanel">{{errpanel}}</div>
+                           <div class="alert alert-success" role="alert" v-show="regissuccess">{{regissuccess}}</div>
+                           <form>
+                             <div class="form-group">
+                               <label for="username">username</label>
+                               <input type="text" class="form-control" v-model="addusername" id="username" placeholder="Enter Username" data-toggle="tooltip" data-placement="top" title="Enter your username">
+                             </div>
+                             <div class="form-group">
+                               <label for="exampleInputEmail1">Email address</label> <span style="color:red; margin-left:10px;">{{emailerror}}</span>
+                               <input type="email" class="form-control" v-model="addemail" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email" data-toggle="tooltip" data-placement="top" title="Enter your email">
+                             </div>
+                             <div class="form-group">
+                               <label for="exampleInputPassword1">Password</label><span style="color:red; margin-left:10px;">{{errpassword}}</span>
+                               <input type="password" class="form-control" v-model="addpassword" id="exampleInputPassword1" placeholder="Password" data-toggle="tooltip" data-placement="bottom" title="Enter Your Password">
+                             </div>
+                             <button type="button" class="btn btn-outline-dark" style="width:100%;" @click="register">Register</button>
+                           </form>
+                         </div>
+                     </div>
+                     <div class="footer">
+                       <button class="btn btn-simple" onclick="rotateCard(this)">
+                           <i class="fa fa-reply"></i> Back
+                       </button>
+                     </div>
+                   </div>
+               </div>
+             </div>
+         </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+    if (localStorage.getItem('token')){
+      location.replace('/')
+    }
+      function rotateCard(btn){
+         var $card = $(btn).closest('.card-container');
+         if($card.hasClass('hover')){
+             $card.removeClass('hover');
+         } else {
+             $card.addClass('hover');
+         }
+      }
+    </script>
+    <script src="assets/js/script.js" charset="utf-8"></script>
+  </body>
+</html>
