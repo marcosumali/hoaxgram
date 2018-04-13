@@ -4,7 +4,27 @@
     background: red;
 }
 
+#urlcode {
+    width: 350px;
+    background: #f4f4f4;
+    border: thin solid grey;
+    float: left;
+    padding: 5px;
+    font-size: 16px;
+}
 
+#copyurl {
+    padding: 5px;
+    background: grey;
+    border: thin solid grey;
+    cursor: pointer;
+}
+#copyurl:hover {
+    padding: 5px;
+    background: red;
+    border: thin solid red;
+    cursor: pointer;
+}
 
 .bg-light {
     background: #9108e7 !important

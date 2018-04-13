@@ -60,18 +60,29 @@
                             <li class="breadcrumb-item active" aria-current="page">Details</li>
                         </ol>
                     </nav>
-                    <!-- <div style="color: red;" id="pageHeader-first">HoaxGram</div> -->
                     <h1 id="heading" style="margin-top:20px;  margin-bottom:20px;">{{ title }}</h1>
                     <img style="width:100%;" v-bind:src="img">
                     <ul style="width:100%;" class="col-md-12">
                         <div class="row">
-                            <input type="button" v-on:click="shareFb">
-                            <!-- <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com" target="_blank">
-                                <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
-                            </a> -->
+                            <div class="col-md-6">
+                                
+                            </div>
+                            <div class="col-md-6" style="display:table; float:right">
+                                <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com" target="_blank">
+                                    <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+                                </a>
+                                <a href="https://twitter.com/share?url=https://simplesharebuttons.com&amp;text=Simple%20Share%20Buttons&amp;hashtags=simplesharebuttons" target="_blank">
+                                    <img src="https://simplesharebuttons.com/images/somacro/twitter.png" alt="Twitter" />
+                                </a>
+                                <a href="mailto:?Subject=Simple Share Buttons&amp;Body=I%20saw%20this%20and%20thought%20of%20you!%20 https://simplesharebuttons.com">
+                                    <img src="https://simplesharebuttons.com/images/somacro/email.png" alt="Email" />
+                                </a>
+                            </div>
                         </div>
                     </ul>
                     <p style="margin-top:10px;"><span style="font-weight:bold;">Hoaxgram </span>- {{ desc }}</p>
+                    <!-- <input style="width:50%; font-size:12px; padding: 5px;" type="text" v-bind:value="url"> -->
+                    <p id="urlcode">{{ url }}</p><button id="copyurl" v-on:click="copyToClipboard('#urlcode')">COPY URL</button>
                 </div>
 
                 <div style="margin-top:50px; margin-bottom:50px;" class="col-lg-5">
@@ -82,8 +93,8 @@
         </div>
 
     </div>
-    <!-- <script type="text/javascript" src="node_modules/social-sharing/dist/js/socialSharing.min.js"></script> -->
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script>
         window.onload = function() {
         var chart = new CanvasJS.Chart("chartContainer", {
@@ -104,7 +115,7 @@
         });
         chart.render();
         }
-
+        
         new Vue({
             el: '#app',
             data: {
@@ -126,8 +137,12 @@
                         console.log(err)
                     })
                 },
-                shareFb: function() {
-
+                copyToClipboard: function(element) {
+                    var $temp = $("<input>");
+                    $("body").append($temp);
+                    $temp.val($(element).text()).select();
+                    document.execCommand("copy");
+                    $temp.remove();
                 }
             }
         })
