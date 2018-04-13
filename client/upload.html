@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="./assets/css/upload.css">
+
+    <title>HOAXGRAM</title>
+</head>
+<body>
+
+    <section class="vue-container" id="app">
+        <div class="container-box bg-image">
+            <div class="container-row1">
+                <div class="container-item-form col-md-4 offset-md-4">
+                    <br>
+                    <h1 class="title">{{ title }}</h1><br>
+                    <h4 class="greet">{{ greet }}</h4>
+                    <h4 class="prologue">{{ prologue }}</h4>
+                    <form>
+                        <div class="form-group">
+                            <label for="exampleInputEmail1">Post Title</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Your post title" ref="title">
+                            <small id="emailHelp" class="form-text text-muted">Pssttt, the catchier the title is better for grabbing user's attention.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleTextarea">Post Description</label>
+                            <textarea class="form-control" id="exampleTextarea" rows="3" placeholder="Detail description of your post" ref="desc"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleSelect1">Hoax Status</label>
+                            <select class="form-control" id="exampleSelect1" ref="status">
+                            <option value="Hoax">Hoax</option>
+                            <option value="Not Hoax">Not Hoax</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleInputFile">File input</label>
+                            <input type="file" class="form-control-file" id="image" aria-describedby="fileHelp" ref="image">
+                            <small id="fileHelp" class="form-text text-muted">Pictures will help in contributing user's perception to vote :)</small>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary col-md-3" @click="addUploadToDB">POST !</button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="container-row2">
+
+
+            </div>
+        </div>
+
+
+    </section>
+    
+
+
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                title: 'HOAXGRAM',
+                greet: 'Hi Irsyad',
+                prologue: 'What would you like to post today?'
+            },
+            methods: {
+                addUploadToDB() {
+
+                    const fileInput = document.querySelector('#image');
+                    // console.log('ini fileinput',fileInput);
+
+                    var formData = new FormData()
+                    formData.append('UploadTitle', this.$refs.title.value);
+                    formData.append('UploadDesc', this.$refs.desc.value);
+                    formData.append('UploadType', 'Open');
+                    formData.append('UploadStatus', this.$refs.status.value);
+                    formData.append('image', fileInput.files[0]);
+
+                    // let obj = {
+                    //     UploadTitle: this.$refs.title.value,
+                    //     UploadDesc: this.$refs.desc.value,
+                    //     UploadType: 'Open',
+                    //     UploadStatus: this.$refs.status.value,
+                    //     image: fileInput.files[0]
+                    // }
+                    // console.log('ini dari html',obj)
+
+                    axios.post('http://localhost:3000/upload', formData)
+                    .then(function (result) {
+                        console.log('ini resultnya',result);
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+                }
+            }
+        })            
+    </script>
+    
+
+</body>
+</html>
