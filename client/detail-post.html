@@ -65,13 +65,10 @@
                     <img style="width:100%;" v-bind:src="img">
                     <ul style="width:100%;" class="col-md-12">
                         <div class="row">
-                            <li style="width:100%; list-style:none;" class="col-md-4">
-                                <a href="youtube.com"><i style="font-size:30px; color:black; margin:10px;" class="far fa-thumbs-up"></i></a>
-                                <a href="youtube.com"><i style="font-size:30px; color:black; margin:10px;" class="far fa-thumbs-down"></i></a>
-                            </li>
-                            <li class="col-md-4">
-                            </li>
-                            <li style="width:100%; list-style:none; background:blue; display:table" class="col-md-4"><a href="facebook.com">Share</a></li>
+                            <input type="button" v-on:click="shareFb">
+                            <!-- <a href="http://www.facebook.com/sharer.php?u=https://simplesharebuttons.com" target="_blank">
+                                <img src="https://simplesharebuttons.com/images/somacro/facebook.png" alt="Facebook" />
+                            </a> -->
                         </div>
                     </ul>
                     <p style="margin-top:10px;"><span style="font-weight:bold;">Hoaxgram </span>- {{ desc }}</p>
@@ -128,6 +125,9 @@
                     .catch(function(err) {
                         console.log(err)
                     })
+                },
+                shareFb: function() {
+
                 }
             }
         })
