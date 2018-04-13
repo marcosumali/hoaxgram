@@ -4,8 +4,8 @@ const ObjectId = require('mongodb').ObjectID;
 class ControllerUpload {
 
     static create(req,res) {
-        // console.log('ini dari js file',req.file);
-        // console.log('ini dari js body',req.body);
+        //console.log('ini dari js file',req.file);
+        //console.log('ini dari js body',req.body);
     
         let UploadTitle = req.body.UploadTitle;
         let UploadDesc = req.body.UploadDesc;
@@ -18,9 +18,11 @@ class ControllerUpload {
             UploadDesc,
             UploadType,
             UploadStatus,
-            UploadImage
+            UploadImage,
+            UploadLike : 0,
+            UploadDislike : 0
         }
-        // console.log('ini upload',objUpload)   
+        //console.log('ini upload',objUpload)   
     
         const newUpload = new ModelUpload(objUpload);
     
