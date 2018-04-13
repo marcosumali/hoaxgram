@@ -49,12 +49,31 @@
                         </div>
 
                         <button type="submit" class="btn btn-primary col-md-3" @click="addUploadToDB">POST !</button>
+                        
                     </form>
                 </div>
             </div>
 
-            <div class="container-row2">
+            <br>
+            <hr>
+            <br>
 
+            <div class="container-row2">
+                <div class="container-item-upload col-md-6 offset-md-3" v-for="upload in uploads">
+                    <div class="image col-md-6" >
+                        <img v-bind:src="upload.UploadImage" style="width: 400px;height: 250px; border-radius: 5px">
+                    </div>
+
+                    <div class="upload col-md-4">
+                        <h4>Title: {{ upload.UploadTitle }}</h4>
+                        <p>Description: {{ upload.UploadDesc }}</p>
+                        <p>Status: {{ upload.UploadType }}</p>
+                        <b><p>{{ upload.UploadStatus }}</p></b>
+                        <!-- <p>test</p> -->
+                        <button class="btn btn-primary">Close Post</button>
+                    </div>
+                    
+                </div>
 
             </div>
         </div>
@@ -69,8 +88,16 @@
             el: '#app',
             data: {
                 title: 'HOAXGRAM',
-                greet: 'Hi Irsyad',
-                prologue: 'What would you like to post today?'
+                greet: 'Hi',
+                prologue: 'What would you like to post today?',
+                uploads: []
+            },
+            created: function() {
+                // console.log('test')
+                // var tampil = this;
+                
+                this.showUploadDB();
+
             },
             methods: {
                 addUploadToDB() {
@@ -95,12 +122,32 @@
                     // console.log('ini dari html',obj)
 
                     axios.post('http://localhost:3000/upload', formData)
-                    .then(function (result) {
+                    .then((result) => {
                         console.log('ini resultnya',result);
+                        this.showUploadDB();
                     })
                     .catch(function (error) {
                         console.log(error);
                     });
+                },
+                showUploadDB() {
+
+                    axios.get('http://localhost:3000/upload')
+                    .then((results) => {
+                        console.log('ini show all upload',results);                  
+                        console.log('ini inner',results.data.uploads);
+                        // console.log(this.title)
+                        // this.title = ''
+                        // console.log(tampil.title);
+                        
+                        console.log(results.data.uploads[0].UploadImage)
+                        this.uploads = results.data.uploads
+                        
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
                 }
             }
         })            
