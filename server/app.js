@@ -10,9 +10,12 @@ var cors = require('cors');
 
 mongoose.connect('mongodb://localhost/hoax');
 
+<<<<<<< HEAD
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var detailsRouter = require('./routes/detail-post');
+=======
+>>>>>>> cf4ac98f72beb3da504b2b968d8bcb6951830658
 var hoaxRouter = require('./routes/hoax.route');
 
 var app = express();
@@ -28,10 +31,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+<<<<<<< HEAD
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/details', detailsRouter);
 app.use('/hoax', hoaxRouter);
+=======
+app.use(cors())
+
+app.use('/', hoaxRouter);
+>>>>>>> cf4ac98f72beb3da504b2b968d8bcb6951830658
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
